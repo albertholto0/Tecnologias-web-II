@@ -1,7 +1,7 @@
 from flask import Flask
 from dotenv import load_dotenv
 from app.routes.UsuariosRoutes import usuarios_bp
-from app.extensions import db
+from app.extensions import db, jwt
 from config import Config
 
 load_dotenv()
