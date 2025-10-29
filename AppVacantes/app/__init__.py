@@ -1,8 +1,12 @@
 from flask import Flask
 from dotenv import load_dotenv
-from app.routes.UsuariosRoutes import usuarios_bp
+
+
+from AppVacantes.app.routes.usuarios_routes import usuarios_bp
+from app.routes.usuarios_routes import roles_bp
 from app.extensions import db, jwt
 from config import Config
+from app.models.UsuarioModels import UsuarioModel
 
 load_dotenv()
 
@@ -17,12 +21,14 @@ def create_app():
     db.init_app(app)
     
     with app.app_context():
-        #db.drop_all()  # Eliminar las tablas existentes (si las hay)
-        db.create_all()  # Crear las tablas en la base de datos si no existen
+        try:
+            #db.drop_all()  # Eliminar las tablas existentes (si las hay)
+            db.create_all()  # Crear las tablas en la base de datos si no existen
+        except Exception as e:
+            print(f"Error al crear las tablas: {e}")
 
     #cargar una configuracion
     app.config.from_object('config.Config')
-
     app.register_blueprint(usuarios_bp,urlprefix='/usuarios')
 
     return app
