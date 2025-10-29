@@ -29,6 +29,9 @@ def create_app():
 
     #cargar una configuracion
     app.config.from_object('config.Config')
-    app.register_blueprint(usuarios_bp,urlprefix='/usuarios')
+    
+    # Registrar blueprints
+    app.register_blueprint(usuarios_bp, url_prefix='/usuarios')
+    app.register_blueprint(roles_bp, url_prefix='/roles')
 
     return app

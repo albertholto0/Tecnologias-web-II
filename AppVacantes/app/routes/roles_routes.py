@@ -12,7 +12,7 @@ def obtener_roles():
     roles_json = [{
         'id': rol.id,
         'nombre_rol': rol.nombre_rol,
-        'usuarios': [u.nombre_usuario for u in rol.usuarios]
+        'usuarios': [u.nombre for u in rol.usuarios] 
     } for rol in roles]
     
     return jsonify(roles_json), 200
