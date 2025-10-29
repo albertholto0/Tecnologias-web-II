@@ -20,8 +20,11 @@ def obtener_roles():
 # Crear un nuevo rol
 @roles_bp.route('/crear', methods=['POST'])
 def crear_rol():
-    datos = request.get_json() or {}
-    
+    try:
+        datos = request.get_json(force=True) or {}
+    except Exception as e:
+        return jsonify({'error': 'El body debe ser un JSON válido'}), 400
+        
     if not datos.get('nombre_rol'):
         return jsonify({'error': 'Faltan campos obligatorios'}), 400
 

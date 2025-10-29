@@ -25,6 +25,7 @@ def obtener_todos():
     return jsonify(usuarios_json)
 
 # Crear usuarios
+@usuarios_bp.route('/crear', methods=['POST'])
 @usuarios_bp.route('/', methods=['POST'])
 def crear_usuario():
     """Crear un nuevo usuario"""

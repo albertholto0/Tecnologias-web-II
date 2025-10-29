@@ -13,6 +13,8 @@ load_dotenv()
 #crear nuestra aplicacion, devolver una instancia de la clase Flask con las configuraciones asignadas
 def create_app():
     app = Flask(__name__)
+    # Aceptar rutas con o sin barra final (evita 404/redirects inesperados en POST)
+    app.url_map.strict_slashes = False
     
     # Cargar configuraciones
     app.config.from_object(Config)
