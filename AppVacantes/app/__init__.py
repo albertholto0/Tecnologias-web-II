@@ -10,16 +10,16 @@ from app.models.UsuarioModels import UsuarioModel
 
 load_dotenv()
 
-#crear nuestra aplicacion, devolver una instancia de la clase Flask con las configuraciones asignadas
+# crear nuestra aplicacion
 def create_app():
     app = Flask(__name__)
-    # Aceptar rutas con o sin barra final (evita 404/redirects inesperados en POST)
+    # aceptar rutas con o sin barra final
     app.url_map.strict_slashes = False
     
-    # Cargar configuraciones
+    # cargar configuraciones
     app.config.from_object(Config)
 
-    # Inicializar extensiones
+    # inicializar extensiones
     db.init_app(app)
     
     with app.app_context():

@@ -10,11 +10,11 @@ class RolService:
     @staticmethod
     def crear_rol(nombre_rol):
         try:
-            # Validar datos de entrada
+            # validar datos de entrada
             if not nombre_rol:
                 return None, "Falta el nombre del rol"
 
-            # Verificar si el rol ya existe
+            # verificar si el rol ya existe
             if RolModel.query.filter_by(nombre_rol=nombre_rol).first():
                 return None, "El nombre del rol ya existe"
 
@@ -22,12 +22,12 @@ class RolService:
                 nombre_rol=nombre_rol
             )
 
-            # Guardar el nuevo rol en la base de datos
+            # guardar el nuevo rol en la base de datos
             db.session.add(nuevo_rol)
             db.session.commit()
 
             return nuevo_rol, "Rol creado exitosamente"
         except Exception as e:
-            # En caso de error, revertir la transacción
+            # en caso de error, revertir la transacción
             db.session.rollback()
             return None, f"Error al crear el rol: {str(e)}"

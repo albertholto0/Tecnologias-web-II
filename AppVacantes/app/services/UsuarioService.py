@@ -11,15 +11,15 @@ class UsuarioService:
     @staticmethod
     def crear_usuario(nombre_usuario, password, rol_id):
         try:
-            # Validar datos de entrada
+            # validar datos de entrada
             if not nombre_usuario or not password or not rol_id:
                 return None, "Faltan datos obligatorios"
 
-            # Verificar si el nombre de usuario ya existe
+            # verificar si el nombre de usuario ya existe
             if UsuarioModel.query.filter_by(nombre=nombre_usuario).first():
                 return None, "El nombre de usuario ya existe"
 
-            # Verificar si el rol existe
+            # verificamos si el rol existe
             if not RolModel.query.get(rol_id):
                 return None, "El rol especificado no existe"
 
@@ -35,7 +35,6 @@ class UsuarioService:
 
             return usuario, "Usuario creado exitosamente"
         except Exception as e:
-            # En caso de error, revertir la transacción
             db.session.rollback()
             return None, f"Error al crear el usuario: {str(e)}"
 
@@ -56,9 +55,9 @@ class UsuarioService:
             if not usuario:
                 return None, "Usuario no encontrado"
 
-            # Actualizar solo los campos proporcionados
+            # actualizar solo los campos proporcionados
             if nombre:
-                # Verificar si el nuevo nombre ya existe para otro usuario
+                # verificar si el nuevo nombre ya existe para otro usuario
                 existe = UsuarioModel.query.filter(
                     UsuarioModel.nombre == nombre,
                     UsuarioModel.id != usuario_id
@@ -71,7 +70,7 @@ class UsuarioService:
                 usuario.password = password
 
             if rol_id:
-                # Verificar si el nuevo rol existe
+                # verificar si el nuevo rol existe
                 if not RolModel.query.get(rol_id):
                     return None, "El rol especificado no existe"
                 usuario.rol_id = rol_id

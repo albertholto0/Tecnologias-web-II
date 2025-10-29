@@ -1,15 +1,15 @@
 import os
 from dotenv import load_dotenv
 
-# Cargar .env aquí para que os.getenv() dentro de la clase Config vea las variables.
+# esto cargara las variables de entorno desde un archivo .env
 load_dotenv()
 
 
 class Config:
-    DEBUG = True  # Para que se recargue la app al guardar (ctrl + s).
+    DEBUG = True  # Para que se recargue la app al guardar
     PORT = 5000  # Se puede cambiar el puerto.
 
-    # Construir la URI con valores por defecto razonables
+    # Configuraciones de la base de datos
     DB_USER = os.getenv('DB_USER', 'root')
     DB_PASSWORD = os.getenv('DB_PASSWORD', 'root')
     DB_HOST = os.getenv('DB_HOST', 'localhost')
