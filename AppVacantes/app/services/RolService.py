@@ -1,27 +1,33 @@
-from app.models.UsuarioModels import UsuariosModel
-from flask import jsonify
+from app.models.UsuarioModels import RolModel
 from app.extensions import db
 
 class RolService:
-
     @staticmethod
     def obtener_roles():
-        roles = UsuariosModel.query.all()
+        roles = RolModel.query.all()
         return roles
-    
+
     @staticmethod
     def crear_rol(nombre_rol):
+        try:
+            # Validar datos de entrada
+            if not nombre_rol:
+                return None, "Falta el nombre del rol"
 
-        if not nombre_rol:
-            return jsonify({'error': 'Faltan campos obligatorios'}), 400
-        
-        if UsuariosModel.query.filter_by(nombre_rol=nombre_rol).first():
-            return jsonify({'error': 'El nombre del rol ya existe'}), 400
+            # Verificar si el rol ya existe
+            if RolModel.query.filter_by(nombre_rol=nombre_rol).first():
+                return None, "El nombre del rol ya existe"
 
-        nuevo_rol = UsuariosModel(
-            nombre_rol=nombre_rol
-        )
-        
-        db.session.add(nuevo_rol)
-        db.session.commit()
-        return jsonify({'mensaje': 'Rol creado exitosamente', 'rol': nuevo_rol.to_dict()}), 201
+            nuevo_rol = RolModel(
+                nombre_rol=nombre_rol
+            )
+
+            # Guardar el nuevo rol en la base de datos
+            db.session.add(nuevo_rol)
+            db.session.commit()
+
+            return nuevo_rol, "Rol creado exitosamente"
+        except Exception as e:
+            # En caso de error, revertir la transacción
+            db.session.rollback()
+            return None, f"Error al crear el rol: {str(e)}"

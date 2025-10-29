@@ -1,52 +1,62 @@
 from flask import Blueprint, request, jsonify
 from app.extensions import db
 from app.models.UsuarioModels import RolModel
-from app.services.RolService import RolService
+from app.services.UsuarioService import UsuarioService
 
-roles_bp = Blueprint('roles', __name__)
+# Se crea el Blueprint
+usuarios_bp = Blueprint('usuarios', __name__)
 
-# Obtener todos los roles
-@roles_bp.route('/', methods=['GET'])
-def obtener_roles():
-    # Hacer querys desde instancia
-    # query = db.session.query().filter() sirve para hacer consultas mas complejas
-    # roles = RolModel.query.all() # Query en Python con Flask usando sqlalchemy. Esta es otra forma de hacerlo
+# Listar usuarios
+@usuarios_bp.route('/', methods=['GET'])
+def obtener_todos():
+    usuarios = UsuarioService.obtener_usuarios()
     
-    roles = RolService.obtener_roles() # Llamada al servicio para obtener roles.
-
-    # Convertir los datos a un JSON
-    roles_json = [ {
-        'id': roles.id,
-        'nombre_rol': roles.nombre_rol,
-        'usuarios' : [u.nombre_usuario for u in roles.usuarios] # Iteración para obtener los nombres de usuario asociados a cada rol
-
-    } for roles in roles
-    ]
+    # Verificar si hay usuarios, si no hay, retornar un mensaje adecuado.
+    if not usuarios:
+        return jsonify({'mensaje': 'No hay usuarios registrados'}), 404
     
-    # Devuelve los datos en formato JSON.
-    return jsonify(roles_json), 200
+    return jsonify(usuarios)
 
-# Crear un nuevo rol
-@roles_bp.route('/crear', methods=['POST'])
-def crear_rol():
-    datos = request.get_json() or {}
-
-    if not datos.get('nombre_rol'):
-        return jsonify({'error': 'Faltan campos obligatorios'}), 400
-
-    nuevo_rol = RolModel(
-        nombre_rol = datos['nombre_rol']
+# Crear usuarios
+@usuarios_bp.route('/', methods=['POST'])
+def crear_usuario():
+    nuevo = request.get_json() or {}
+    
+    respuesta = UsuarioService.crear_usuario(
+        nombre_usuario=nuevo.get('nombre_usuario'),
+        password=nuevo.get('password'),
+        rol_id=nuevo.get('rol_id')
     )
-    
-    # Validar que el nombre del rol no se repita
-    nombre_repetido = RolModel.query.filter_by(nombre_rol=datos['nombre_rol']).first() # Busca el primer registro que coincida.
-    if nombre_repetido:
-        return jsonify({'error': 'El nombre del rol ya existe'}), 400
 
-    db.session.add(nuevo_rol)
-    db.session.commit() # Guarda los cambios en la base de datos
+    if not nuevo.get('nombre_usuario') or not nuevo.get('password'):
+        return jsonify({'error': 'Faltan campo obligatorios'}), 400
 
-    return jsonify({'mensaje': 'Rol creado exitosamente', 'rol': {
-        'id': nuevo_rol.id,
-        'nombre_rol': nuevo_rol.nombre_rol
-    }}), 201
+    nuevo['id'] = len(usuarios) + 1
+    usuarios.append(nuevo)
+
+    return jsonify({'mensaje': 'Usuario creado exitosamente ', 'usuario': nuevo}), 201
+
+# Buscar un usuario por id
+@usuarios_bp.route('/<int:usuario_id>', methods=['GET'])
+def obtener_usuario_por_id(usuario_id):
+    for usuario in usuarios:
+        if usuario['id'] == usuario_id:
+            return jsonify(usuario)
+    return jsonify({'error': 'Usuario no encontrado'}), 404
+
+# Actualizar informacion de un usuario
+@usuarios_bp.route('/<int:usuario_id>', methods=['PUT'])
+def actualizar_usuario(usuario_id):
+    # Obtener_usuario_por_id devuelve JSON; buscamos el objeto en la lista
+    usuario_obj = next((u for u in usuarios if u['id'] == usuario_id), None)
+    if usuario_obj is None:
+        return jsonify({'error': 'Usuario no encontrado'}), 404
+
+    datos_actualizados = request.get_json() or {}
+
+    if not datos_actualizados.get('nombre') or not datos_actualizados.get('password'):
+        return jsonify({'error': 'Faltan campo obligatorios'}), 400
+
+    usuario_obj.update(datos_actualizados)
+
+    return jsonify({'Mensaje': 'Usuario actualizado exitosamente', 'Usuario': usuario_obj})

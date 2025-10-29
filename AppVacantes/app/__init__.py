@@ -2,8 +2,8 @@ from flask import Flask
 from dotenv import load_dotenv
 
 
-from AppVacantes.app.routes.usuarios_routes import usuarios_bp
-from app.routes.usuarios_routes import roles_bp
+from app.routes.usuarios_routes import usuarios_bp
+from app.routes.roles_routes import roles_bp
 from app.extensions import db, jwt
 from config import Config
 from app.models.UsuarioModels import UsuarioModel
