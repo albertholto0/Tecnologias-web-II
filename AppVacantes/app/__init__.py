@@ -7,6 +7,7 @@ from app.routes.roles_routes import roles_bp
 from app.extensions import db, jwt
 from config import Config
 from app.models.UsuarioModels import UsuarioModel
+from app.routes.auth_routes import auth_bp as auth
 
 load_dotenv()
 
@@ -35,5 +36,6 @@ def create_app():
     # Registrar blueprints
     app.register_blueprint(usuarios_bp, url_prefix='/usuarios')
     app.register_blueprint(roles_bp, url_prefix='/roles')
+    app.register_blueprint(auth, url_prefix='/auth')
 
     return app

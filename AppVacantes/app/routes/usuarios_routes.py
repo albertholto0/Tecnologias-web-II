@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required
 from app.services.UsuarioService import UsuarioService
 
 # Se crea el Blueprint
@@ -6,6 +7,7 @@ usuarios_bp = Blueprint('usuarios', __name__)
 
 # Listar usuarios
 @usuarios_bp.route('/', methods=['GET'])
+@jwt_required()
 def obtener_todos():
     """Obtener todos los usuarios registrados"""
     usuarios = UsuarioService.obtener_usuarios()
