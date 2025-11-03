@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.services.RolService import RolService
 
-roles_bp = Blueprint('roles', __name__)
+roles_bp = Blueprint('roles_admin', __name__)
 
 # Obtener todos los roles
 @roles_bp.route('/', methods=['GET'])

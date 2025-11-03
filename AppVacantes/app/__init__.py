@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from app.routes.usuarios_routes import usuarios_bp
 from app.routes.roles_routes import roles_bp
+from app.routes.vacantes_routes import vacantes_bp
 from app.extensions import db, jwt
 from config import Config
 from app.models.UsuarioModels import UsuarioModel
@@ -37,5 +38,9 @@ def create_app():
     app.register_blueprint(usuarios_bp, url_prefix='/usuarios')
     app.register_blueprint(roles_bp, url_prefix='/roles')
     app.register_blueprint(auth, url_prefix='/auth')
+    app.register_blueprint(vacantes_bp, url_prefix='/vacantes')
+
+    return app
+    app.register_blueprint(vacantes_bp, url_prefix='/vacantes')
 
     return app

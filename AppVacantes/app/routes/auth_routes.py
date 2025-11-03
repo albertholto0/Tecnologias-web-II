@@ -5,17 +5,17 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 
 auth_bp = Blueprint('roles', __name__)
 
-@auth_bp.route('/login', methods=['GET'])
+@auth_bp.route('/login', methods=['POST'])
 
 def login():
     data = request.get_json()
     usuario = UsuarioModel(
-        nombre_usuario = data.get('nombre_usuario'),
+        nombre = data.get('nombre'),
         password = data.get('password')
     )
     
     auth_usuario = AuthUsuario.authenticateUser(
-        nombre_usuario=usuario.nombre_usuario,
+        nombre=usuario.nombre,
         password=usuario.password
     )
     
