@@ -3,7 +3,7 @@ from app.models.UsuarioModels import UsuarioModel
 from app.services.AuthUsuario import AuthUsuario
 from flask_jwt_extended import create_access_token, create_refresh_token
 
-auth_bp = Blueprint('roles', __name__)
+auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/login', methods=['POST'])
 
@@ -40,8 +40,12 @@ def login():
                 'refresh_token': refresh_token,
                 'usuario': {
                     'id': auth_usuario.id,
-                    'nombre_usuario': auth_usuario.nombre_usuario,
+                    'nombre': auth_usuario.nombre,
                     'rol': nombre_rol
                 }
             }
         }), 200
+    # Si la autenticación falla, devolver un error 401
+    return jsonify({
+        'mensaje': 'Credenciales inválidas'
+    }), 401

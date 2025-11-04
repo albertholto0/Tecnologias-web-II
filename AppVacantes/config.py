@@ -22,7 +22,8 @@ class Config:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Desactivar para evitar warnings. Consume recursos.
     
-    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+    # Clave secreta para firmar los JWT. En producción debe venir desde .env
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'dev-secret-key')
 
     JWT_ACCESS_TOKEN_EXPIRES = 86400  # Tiempo de expiración del token en segundos (24 horas)
     JWT_REFRESH_TOKEN_EXPIRES = 604800 # Tiempo de expiración del token de refresco en segundos (7 días)

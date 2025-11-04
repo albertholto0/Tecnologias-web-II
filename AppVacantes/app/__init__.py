@@ -8,7 +8,7 @@ from app.routes.vacantes_routes import vacantes_bp
 from app.extensions import db, jwt
 from config import Config
 from app.models.UsuarioModels import UsuarioModel
-from app.routes.auth_routes import auth_bp as auth
+from app.routes.auth_routes import auth_bp
 
 load_dotenv()
 
@@ -23,6 +23,8 @@ def create_app():
 
     # inicializar extensiones
     db.init_app(app)
+    # Inicializar JWTManager (necesario para crear/usar tokens JWT)
+    jwt.init_app(app)
     
     with app.app_context():
         try:
@@ -37,10 +39,7 @@ def create_app():
     # Registrar blueprints
     app.register_blueprint(usuarios_bp, url_prefix='/usuarios')
     app.register_blueprint(roles_bp, url_prefix='/roles')
-    app.register_blueprint(auth, url_prefix='/auth')
-    app.register_blueprint(vacantes_bp, url_prefix='/vacantes')
-
-    return app
+    app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(vacantes_bp, url_prefix='/vacantes')
 
     return app
