@@ -1,6 +1,7 @@
 from app.extensions import db
 
 class VacanteModel(db.Model):
+    # nombre de la tabla en la base de datos
     __tablename__ = 'vacantes'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -17,6 +18,8 @@ class VacanteModel(db.Model):
             'id_reclutador': self.id_reclutador,
             'id_postulante': self.id_postulante
         }
+        
+    # definicion de las columnas
     nombre = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.Text, nullable=False)
     detalles = db.Column(db.Text, nullable=True)
