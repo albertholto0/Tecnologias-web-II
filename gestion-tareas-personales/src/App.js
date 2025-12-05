@@ -5,22 +5,30 @@ import ListaTareas from './componentes/ListaTareas';
 
 function App() {
   const [tareas, setTareas] = useState([]);
+  const [alerta, setAlerta] = useState('');
+  const [tipoAlerta, setTipoAlerta] = useState('warning');
 
   const agregarTarea = (textoTarea) => {
     const palabras = textoTarea.trim().split(' ').filter(p => p.length > 0);
     
     if (textoTarea.trim() === '') {
-      alert('No puedes agregar una tarea vacía');
+      setTipoAlerta('warning');
+      setAlerta('No puedes agregar una tarea vacía');
+      setTimeout(() => setAlerta(''), 3000);
       return;
     }
     
     if (palabras.length < 3) {
-      alert('La tarea debe tener al menos 3 palabras');
+      setTipoAlerta('warning');
+      setAlerta('La tarea debe tener al menos 3 palabras');
+      setTimeout(() => setAlerta(''), 3000);
       return;
     }
     
     if (textoTarea.length > 150) {
-      alert('La tarea no puede tener más de 150 caracteres');
+      setTipoAlerta('warning');
+      setAlerta('La tarea no puede tener más de 150 caracteres');
+      setTimeout(() => setAlerta(''), 3000);
       return;
     }
 
@@ -31,6 +39,9 @@ function App() {
     };
 
     setTareas([...tareas, nuevaTarea]);
+    setTipoAlerta('success');
+    setAlerta('¡Tarea agregada con éxito!');
+    setTimeout(() => setAlerta(''), 3000);
   };
 
   const marcarCompletada = (id) => {
@@ -52,6 +63,13 @@ function App() {
       <div className="text-center mb-4">
         <img src="/_.jpeg" alt="Gestión de tareas" style={{ maxWidth: '300px', width: '100%' }} />
       </div>
+
+      {alerta && (
+        <div className={`alert alert-${tipoAlerta} alert-dismissible fade show`} role="alert">
+          {alerta}
+          <button type="button" className="btn-close" onClick={() => setAlerta('')}></button>
+        </div>
+      )}
       
       <FormularioTarea agregarTarea={agregarTarea} />
       
