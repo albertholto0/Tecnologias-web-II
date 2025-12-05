@@ -1,7 +1,8 @@
-* {
+body {
   font-family: 'Inter', sans-serif;
 }
 
-body {
-  margin: 20px;
+.container {
+  max-width: 800px;
+  padding: 20px;
 }

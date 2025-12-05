@@ -47,12 +47,15 @@ function App() {
   const tareasCompletadas = tareas.filter(tarea => tarea.completada);
 
   return (
-    <div>
-      <h1>Gestión de Tareas Personales</h1>
+    <div className="container">
+      <h1 className="text-center my-4">Gestión de Tareas Personales</h1>
+      <div className="text-center mb-4">
+        <img src="/_.jpeg" alt="Gestión de tareas" style={{ maxWidth: '300px', width: '100%' }} />
+      </div>
       
       <FormularioTarea agregarTarea={agregarTarea} />
       
-      <div>
+      <div className="mt-4">
         <h3>Tareas Pendientes ({tareasPendientes.length})</h3>
         <ListaTareas 
           tareas={tareasPendientes} 
@@ -62,7 +65,7 @@ function App() {
       </div>
 
       {tareasCompletadas.length > 0 && (
-        <div>
+        <div className="mt-4">
           <h3>Tareas Completadas ({tareasCompletadas.length})</h3>
           <ListaTareas 
             tareas={tareasCompletadas} 
