@@ -1,8 +1,13 @@
 body {
   font-family: 'Inter', sans-serif;
+  background-color: antiquewhite;
 }
 
 .container {
   max-width: 800px;
   padding: 20px;
 }
+
+/*
+Aquí controlo la parte visual d mi aplicaion en general
+*/

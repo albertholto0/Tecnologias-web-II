@@ -1,26 +1,26 @@
+/* Componente principal de mi aplicación */
 import React, { useState } from 'react';
 import './App.css';
 import FormularioTarea from './componentes/FormularioTarea';
 import ListaTareas from './componentes/ListaTareas';
 
 function App() {
-  const [tareas, setTareas] = useState([]);
-  const [alerta, setAlerta] = useState('');
-  const [tipoAlerta, setTipoAlerta] = useState('warning');
+  const [tareas, setTareas] = useState([]); // Arreglo pa guardar las tareas
+  const [alerta, setAlerta] = useState(''); // Texto del mensaje de alerta
+  const [tipoAlerta, setTipoAlerta] = useState('warning'); 
 
   const agregarTarea = (textoTarea) => {
-    const palabras = textoTarea.trim().split(' ').filter(p => p.length > 0);
-    
+    // Valida que no sea una tarea vacia
     if (textoTarea.trim() === '') {
       setTipoAlerta('warning');
       setAlerta('No puedes agregar una tarea vacía');
       setTimeout(() => setAlerta(''), 3000);
       return;
     }
-    
-    if (palabras.length < 3) {
+    // Valida que el texto este en rango de 3-150 caracteres
+    if (textoTarea.trim().length < 3) {
       setTipoAlerta('warning');
-      setAlerta('La tarea debe tener al menos 3 palabras');
+      setAlerta('La tarea debe tener al menos 3 letras');
       setTimeout(() => setAlerta(''), 3000);
       return;
     }
@@ -31,7 +31,7 @@ function App() {
       setTimeout(() => setAlerta(''), 3000);
       return;
     }
-
+    // Si ninguna validación falla, se agrega la tarea
     const nuevaTarea = {
       id: Date.now(),
       texto: textoTarea,
@@ -40,7 +40,7 @@ function App() {
 
     setTareas([...tareas, nuevaTarea]);
     setTipoAlerta('success');
-    setAlerta('¡Tarea agregada con éxito!');
+    setAlerta('¡Tarea agregada!');
     setTimeout(() => setAlerta(''), 3000);
   };
 
@@ -57,11 +57,15 @@ function App() {
   const tareasPendientes = tareas.filter(tarea => !tarea.completada);
   const tareasCompletadas = tareas.filter(tarea => tarea.completada);
 
+  /*
+    Se renderiza el titulo de la aplicación, así como la imagen.
+    Las alertas, cuadro para agregar tareas, tareas pendientes y completadas
+  */
   return (
     <div className="container">
-      <h1 className="text-center my-4">Gestión de Tareas Personales</h1>
+      <h1 className="text-center my-4"><b>Gestión de Tareas Personales</b></h1>
       <div className="text-center mb-4">
-        <img src="/_.jpeg" alt="Gestión de tareas" style={{ maxWidth: '300px', width: '100%' }} />
+        <img src="/_.jpeg" alt="Gestión de tareas" style={{ maxWidth: '250px', width: '100%' }} />
       </div>
 
       {alerta && (
