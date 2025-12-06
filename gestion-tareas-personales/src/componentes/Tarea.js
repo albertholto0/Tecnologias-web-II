@@ -16,6 +16,13 @@ function Tarea({ tarea, marcarCompletada, eliminarTarea }) {
           className={`form-check-label ms-2 ${tarea.completada ? 'text-decoration-line-through text-muted' : ''}`}
         >
           {tarea.texto}
+          {(tarea.fecha || tarea.hora) && (
+            <small className="d-block text-muted">
+              {tarea.fecha && `${tarea.fecha}`}
+              {tarea.fecha && tarea.hora && ' - '}
+              {tarea.hora && `${tarea.hora}`}
+            </small>
+          )}
         </label>
       </div>
       <button 

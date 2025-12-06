@@ -9,7 +9,7 @@ function App() {
   const [alerta, setAlerta] = useState(''); // Texto del mensaje de alerta
   const [tipoAlerta, setTipoAlerta] = useState('warning'); 
 
-  const agregarTarea = (textoTarea) => {
+  const agregarTarea = (textoTarea, fecha, hora) => {
     // Valida que no sea una tarea vacia
     if (textoTarea.trim() === '') {
       setTipoAlerta('warning');
@@ -35,6 +35,8 @@ function App() {
     const nuevaTarea = {
       id: Date.now(),
       texto: textoTarea,
+      fecha: fecha || null,
+      hora: hora || null,
       completada: false
     };
 
