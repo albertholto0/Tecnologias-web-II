@@ -59,4 +59,4 @@ src/
 
 ## Captura de Pantalla
 
-![Aplicacion de Gestion de Tareas](/capturas_pantalla/final.png)
+![Aplicacion de Gestion de Tareas](/gestion-tareas-personales/public/capturas_pantalla/final.png)
