@@ -99,11 +99,8 @@ function App() {
         <div className="mt-4">
           <h3>Tareas Completadas ({tareasCompletadas.length})</h3>
           <ListaTareas 
-          // pasa las tareas completadas al componente ListaTareas
             tareas={tareasCompletadas} 
-            // pasa las funciones para marcar como completada y eliminar tarea
             marcarCompletada={marcarCompletada}
-            // pasa las funciones para marcar como completada y eliminar tarea
             eliminarTarea={eliminarTarea}
           />
         </div>

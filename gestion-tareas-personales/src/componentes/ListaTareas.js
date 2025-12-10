@@ -13,7 +13,6 @@ function ListaTareas({ tareas, marcarCompletada, eliminarTarea }) {
       
       {tareas.map(tarea => (
         <Tarea 
-        // pasa una tarea individual al componente Tarea
           key={tarea.id}
           tarea={tarea}
           marcarCompletada={marcarCompletada}
