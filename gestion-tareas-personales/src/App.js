@@ -47,15 +47,19 @@ function App() {
   };
 
   const marcarCompletada = (id) => {
+    // Cambia el estado de completada de la tarea con el id dado
     setTareas(tareas.map(tarea => 
       tarea.id === id ? { ...tarea, completada: !tarea.completada } : tarea
     ));
+    // recorre todas las tareas y cuando encuentra la que coincide con el id,
+    // cambia su estado de completada a su opuesto (true a false o false a true)
   };
 
   const eliminarTarea = (id) => {
+    // Elimina la tarea con el id dado
     setTareas(tareas.filter(tarea => tarea.id !== id));
   };
-
+   // Separa las tareas en pendientes y completadas
   const tareasPendientes = tareas.filter(tarea => !tarea.completada);
   const tareasCompletadas = tareas.filter(tarea => tarea.completada);
 
@@ -82,18 +86,24 @@ function App() {
       <div className="mt-4">
         <h3>Tareas Pendientes ({tareasPendientes.length})</h3>
         <ListaTareas 
+        // pasa las tareas pendientes al componente ListaTareas
           tareas={tareasPendientes} 
+          // pasa las funciones para marcar como completada y eliminar tarea
           marcarCompletada={marcarCompletada}
+          // pasa las funciones para marcar como completada y eliminar tarea
           eliminarTarea={eliminarTarea}
         />
       </div>
-
+      {/* Aquí se muestran las tareas completadas */}
       {tareasCompletadas.length > 0 && (
         <div className="mt-4">
           <h3>Tareas Completadas ({tareasCompletadas.length})</h3>
           <ListaTareas 
+          // pasa las tareas completadas al componente ListaTareas
             tareas={tareasCompletadas} 
+            // pasa las funciones para marcar como completada y eliminar tarea
             marcarCompletada={marcarCompletada}
+            // pasa las funciones para marcar como completada y eliminar tarea
             eliminarTarea={eliminarTarea}
           />
         </div>
@@ -102,4 +112,5 @@ function App() {
   );
 }
 
+// exportamos el componente para usarlo en otros archivos
 export default App;

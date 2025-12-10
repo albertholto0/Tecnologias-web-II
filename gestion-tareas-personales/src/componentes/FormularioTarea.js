@@ -18,15 +18,17 @@ function FormularioTarea({ agregarTarea }) {
   // Se renderiza el cuadro para agregar mi tarea, 
   // con estilos de boostrap. 
   return (
-    <form onSubmit={manejarEnvio} className="card p-3">
+    // Formulario para agregar tarea
+    <form onSubmit={manejarEnvio} className="card p-3"> 
       <div className="mb-3">
         <label className="form-label">Nueva Tarea</label>
         <input 
           type="text" 
           className="form-control" 
           value={texto}
+          // cada que el usuario escribe algo, se actualiza el estado "texto"
           onChange={(e) => setTexto(e.target.value)}
-          placeholder="Escribe tu tarea aquí (mínimo 3 letras, máximo 150 caracteres)"
+          placeholder="Escribe aquí (3 a 150 caracteres)"
         />
       </div>
       <div className="mb-3">
@@ -35,6 +37,7 @@ function FormularioTarea({ agregarTarea }) {
           type="date" 
           className="form-control" 
           value={fecha}
+          // cada que el usuario escribe algo, se actualiza el estado "fecha"
           onChange={(e) => setFecha(e.target.value)}
         />
       </div>
@@ -44,6 +47,7 @@ function FormularioTarea({ agregarTarea }) {
           type="time" 
           className="form-control" 
           value={hora}
+          // y cada que el usuario escribe algo, se actualiza el estado "hora"
           onChange={(e) => setHora(e.target.value)}
         />
       </div>
@@ -51,5 +55,5 @@ function FormularioTarea({ agregarTarea }) {
     </form>
   );
 }
-
+// aqui exportamos el componente para usarlo en otros archivos
 export default FormularioTarea;

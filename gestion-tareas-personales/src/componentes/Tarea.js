@@ -16,13 +16,19 @@ function Tarea({ tarea, marcarCompletada, eliminarTarea }) {
           className={`form-check-label ms-2 ${tarea.completada ? 'text-decoration-line-through text-muted' : ''}`}
         >
           {tarea.texto}
-          {(tarea.fecha || tarea.hora) && (
+          {/* Si la tarea tiene fecha, se muestra la fecha y la hora */}
+          {tarea.fecha && (
             <small className="d-block text-muted">
-              {tarea.fecha && `${tarea.fecha}`}
-              {tarea.fecha && tarea.hora && ' - '}
-              {tarea.hora && `${tarea.hora}`}
+              {tarea.fecha} {tarea.hora}
             </small>
           )}
+          {/* Si no tiene fecha pero si hora, solo se muestra la hora */}
+          {!tarea.fecha && tarea.hora && (
+            <small className="d-block text-muted">
+              {tarea.hora}
+            </small>
+          )}
+          {/* Si no tiene ni fecha ni hora, pues no se muestra nada */}
         </label>
       </div>
       <button 
@@ -35,4 +41,5 @@ function Tarea({ tarea, marcarCompletada, eliminarTarea }) {
   );
 }
 
+// exportamos el componente para usarlo en otros archivos
 export default Tarea;
