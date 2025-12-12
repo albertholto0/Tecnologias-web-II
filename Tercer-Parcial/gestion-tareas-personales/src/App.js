@@ -55,6 +55,14 @@ function App() {
   };
 
   const marcarCompletada = (id) => {
+    // Busca la tarea por id
+    const tarea = tareas.find(t => t.id === id);
+    if (tarea) {
+      const nuevoEstado = !tarea.completada;
+      if (nuevoEstado) {
+        console.log(`Tarea completa: "${tarea.texto}"`);
+      }
+    }
     // Cambia el estado de completada de la tarea con el id dado
     setTareas(tareas.map(tarea => 
       tarea.id === id ? { ...tarea, completada: !tarea.completada } : tarea
