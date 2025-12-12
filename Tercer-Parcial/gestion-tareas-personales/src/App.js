@@ -1,5 +1,5 @@
 /* Componente principal de mi aplicación */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import FormularioTarea from './componentes/FormularioTarea';
 import ListaTareas from './componentes/ListaTareas';
@@ -8,6 +8,14 @@ function App() {
   const [tareas, setTareas] = useState([]); // Arreglo pa guardar las tareas
   const [alerta, setAlerta] = useState(''); // Texto del mensaje de alerta
   const [tipoAlerta, setTipoAlerta] = useState('warning'); 
+
+  useEffect(() => {
+    console.log("Las tareas han cambiado:", tareas);
+  }, [tareas]);
+
+  useEffect(() => {
+    console.log("Componente App montado");
+  }, []);
 
   const agregarTarea = (textoTarea, fecha, hora) => {
     // Valida que no sea una tarea vacia
